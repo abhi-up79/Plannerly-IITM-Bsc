@@ -15,7 +15,43 @@ class WelcomeScreen extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Image.asset("assets/Icons/logo.png"),
+            Positioned(
+                top: MediaQuery.of(context).size.height * 0.1,
+                child: Image.asset(
+                  "assets/Icons/logo.png",
+                  scale: 6,
+                )),
+            Positioned(
+                top: MediaQuery.of(context).size.height * 0.37,
+                child: Text(
+                  "IIT Madras Bsc Degree",
+                  style: TextStyle(
+                      color: Color(0xffD5A54E),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Merriweather'),
+                )),
+            Positioned(
+                top: MediaQuery.of(context).size.height * 0.52,
+                child: Text(
+                  "Welcome to Plannerly",
+                  style: TextStyle(
+                      color: Color(0xffFFB5B5),
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Merriweather'),
+                )),
+            Positioned(
+                bottom: MediaQuery.of(context).size.height * 0.2,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.white)),
+                    onPressed: null,
+                    child: Text(
+                      "Sign In with Google",
+                      style: TextStyle(fontSize: 20, color: Colors.red),
+                    ))),
           ],
         ),
       ),
