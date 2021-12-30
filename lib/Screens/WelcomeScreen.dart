@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:plannerly_iitm_bsc/Screens/Dashboard.dart';
 import 'package:plannerly_iitm_bsc/Screens/NewProfile.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -59,7 +60,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(Colors.white)),
+                            MaterialStateProperty.all(const Color(0xffD7A74F)),
+                        padding: MaterialStateProperty.all(
+                            const EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 30)),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40))),
+                        side: MaterialStateProperty.all(
+                            const BorderSide(width: 2, color: Colors.white))),
                     onPressed: () async {
                       await googleSignIn.signOut();
                       try {
@@ -78,10 +86,29 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           UserCredential login =
                               await auth.signInWithCredential(credential);
                           if (login != null) {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => NewProfile()));
+                            //Query
+                            FirebaseAuth auth = FirebaseAuth.instance;
+                            FirebaseFirestore firestore =
+                                FirebaseFirestore.instance;
+                            await firestore
+                                .collection('Users')
+                                .where('email',
+                                    isEqualTo: auth.currentUser!.email)
+                                .get()
+                                .then((value) {
+                              debugPrint(value.docs.length.toString());
+                              if (value.docs.length == 0) {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => NewProfile()));
+                              } else {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => Dashboard()));
+                              }
+                            });
                           } else {
                             await googleSignIn.signOut();
                             await auth.signOut();
@@ -93,7 +120,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     },
                     child: Text(
                       "Sign In with Google",
-                      style: TextStyle(fontSize: 20, color: Colors.red),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ))),
           ],
         ),
