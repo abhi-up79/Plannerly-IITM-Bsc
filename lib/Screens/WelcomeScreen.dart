@@ -1,9 +1,22 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:plannerly_iitm_bsc/Screens/NewProfile.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  GoogleSignIn googleSignIn = new GoogleSignIn();
+  GoogleSignInAccount? signedInAccount;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +60,37 @@ class WelcomeScreen extends StatelessWidget {
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Colors.white)),
-                    onPressed: null,
+                    onPressed: () async {
+                      await googleSignIn.signOut();
+                      try {
+                        signedInAccount = await googleSignIn.signIn();
+                        if (signedInAccount != null) {
+                          debugPrint("Authentication Successful");
+                          debugPrint(
+                              "Signed in from ${signedInAccount!.email}");
+                          GoogleSignInAuthentication gauth =
+                              await signedInAccount!.authentication;
+                          final AuthCredential credential =
+                              GoogleAuthProvider.credential(
+                            accessToken: gauth.accessToken,
+                            idToken: gauth.idToken,
+                          );
+                          UserCredential login =
+                              await auth.signInWithCredential(credential);
+                          if (login != null) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => NewProfile()));
+                          } else {
+                            await googleSignIn.signOut();
+                            await auth.signOut();
+                          }
+                        }
+                      } catch (e) {
+                        debugPrint(e.toString());
+                      }
+                    },
                     child: Text(
                       "Sign In with Google",
                       style: TextStyle(fontSize: 20, color: Colors.red),

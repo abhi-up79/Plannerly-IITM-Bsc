@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "165813067551",
+    "project_id": "plannerly-iitm-bsc",
+    "storage_bucket": "plannerly-iitm-bsc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165813067551:android:ebc6ffa9081a2f7bc35a2a",
+        "android_client_info": {
+          "package_name": "com.example.plannerly_iitm_bsc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165813067551-7vvhula1a1ijl7l79thdu9ue6i8gv0nv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.plannerly_iitm_bsc",
+            "certificate_hash": "49d2f469fecf40bc8b073296cd2e9cd40b12351c"
+          }
+        },
+        {
+          "client_id": "165813067551-7000f4unv9so4ijku3tcjgjml5qjtabt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDImkpZ0e4AMVjzVuuJHb66PQR2ZzQrJu0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165813067551-7000f4unv9so4ijku3tcjgjml5qjtabt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

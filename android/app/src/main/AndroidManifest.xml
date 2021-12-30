@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.plannerly_iitm_bsc">
    <application
-        android:label="plannerly_iitm_bsc"
+        android:label="Plannerly IIT Madras BSc"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
